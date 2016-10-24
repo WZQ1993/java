@@ -23,6 +23,5 @@ dependencies {
     compile group: 'com.google.guava', name: 'guava', version: '19.0'
     // https://mvnrepository.com/artifact/net.sf.opencsv/opencsv
     compile group: 'net.sf.opencsv', name: 'opencsv', version: '2.3'
-
 }
 [compileJava,compileTestJava]*.options*.encoding = 'UTF-8'
