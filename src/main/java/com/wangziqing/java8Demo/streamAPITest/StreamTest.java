@@ -1,12 +1,15 @@
 package com.wangziqing.java8Demo.streamAPITest;
 
 import com.google.common.collect.Lists;
+import com.sun.org.apache.xml.internal.security.algorithms.implementations.IntegrityHmac;
 
 import java.sql.Array;
 import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
 /**
@@ -242,4 +245,35 @@ public class StreamTest {
         //Collectors.reducing(初始值,映射函数，聚合函数);
     }
 
+    /**
+     * 原始类型流 IntStream ,LongStream , DoubleStream
+     */
+    private void streamOperation_8(){
+        //创建原始类型流
+        IntStream stream=IntStream.of(1,2,3,4,5,6,7,8,9,10);
+        stream = Arrays.stream(new int[]{1,2,3,4,5,6,7,8,9,10});
+
+        //创建步进为1的流
+        LongStream stream_long=LongStream.range(0,100);//[0，100)
+        stream_long=LongStream.rangeClosed(0,100);//[0,100]
+
+        //编码的代码单元的IntStream
+        IntStream stream_unicode="stream of inicode".codePoints();
+        IntStream stream_utf_16="stream of utf-16".chars();
+
+        //对象流---->原始流
+        stream = Stream.of(1,2,3).mapToInt(integer->integer++);//mapToLong,mapToDouble同理
+
+        //原始流----->对象流
+        Stream<Integer> stream_str=stream.boxed();
+    }
+
+    /**
+     * 并行处理
+     */
+    private void streamOperation_9(){
+        //获取一个并行流   Or  Collection.parallelStream();
+        Stream parallelStream=Stream.of(1,2,3,4,5,6,7,8,9,10).parallel();
+        //当并行流执行终止操作时，所有传递给并行流的延迟操作都会被并行执行（多线程执行）
+    }
 }
