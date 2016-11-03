@@ -19,7 +19,7 @@ import java.time.temporal.TemporalUnit;
  * 7.DateTimeFormatter格式化解析日期
  * Created by 王梓青 on 2016/11/1.
  */
-public class NewTime {
+public class NewTimeTest {
     /**
      * 瞬间和时间段
      */
