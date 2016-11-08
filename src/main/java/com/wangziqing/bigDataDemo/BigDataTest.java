@@ -4,9 +4,7 @@ import au.com.bytecode.opencsv.CSVReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
 import java.util.BitSet;
 import java.util.Optional;
 
@@ -20,8 +18,8 @@ public class BigDataTest {
 
     private Optional<CSVReader> tryReadCsv(String path){
         try{
-            FileReader fileReader=new FileReader(path);
-            return Optional.of(new CSVReader(fileReader));
+            BufferedReader reader=new BufferedReader(new InputStreamReader(new FileInputStream(path),"UTF-8"));
+            return Optional.of(new CSVReader(reader));
         }catch (IOException e){
             logger.error("load file {} error,msg: {}",path,e.getMessage());
         }
