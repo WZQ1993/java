@@ -8,6 +8,7 @@ import java.lang.annotation.*;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
+@Repeatable(RunTimeAnnotations.class)
 public @interface RunTimeAnnotation {
     String value() default "默认值";
 }
