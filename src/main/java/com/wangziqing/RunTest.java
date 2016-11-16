@@ -2,11 +2,14 @@ package com.wangziqing;
 
 import com.google.common.collect.Maps;
 
+import java.time.Instant;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -21,8 +24,15 @@ public class RunTest {
     private static Pattern kugouIdsPattern = Pattern.compile(KUGOUIDS_PATTER);
 
     public static void main(String[] args) {
-        RunTest test = new RunTest();
-        test.testCfAllOf();
+//        RunTest test = new RunTest();
+//        test.testCfAllOf();
+//        LOGGER.info(
+//                Instant.now().toEpochMilli()/1000+"");
+//        LOGGER.info(
+//                new Date().getTime()/1000+"");
+        AtomicReference<Thread> test=new AtomicReference<>();
+        LOGGER.info(test.compareAndSet(null,Thread.currentThread())+"");
+        LOGGER.info(test.compareAndSet(null,Thread.currentThread())+"");
     }
 
     private void testCfAllOf() {
