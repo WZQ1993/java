@@ -24,8 +24,9 @@ public class NioServer {
     private ServerSelectorLoop readSelector;
     private ExecutorService threadPool = Executors.newFixedThreadPool(2);
     private ByteBuffer temp = ByteBuffer.allocate(1024);
-
-    NioServer() {
+    private ServerSocketChannel ssc;
+    private volatile Boolean ReadRunning=false;
+    public NioServer() {
         connectionSelector = new ServerSelectorLoop();
         readSelector = new ServerSelectorLoop();
         SelectorHandle handle = new SelectorHandle() {
@@ -39,6 +40,16 @@ public class NioServer {
                     //将新连接注册到readSelector
                     sc.configureBlocking(false);
                     sc.register(readSelector.getSelector(), SelectionKey.OP_READ);
+                    if(!ReadRunning){
+                        synchronized(this){
+                            if(!ReadRunning){
+                                threadPool.submit(()->{
+                                    readSelector.start();
+                                });
+                                ReadRunning=true;
+                            }
+                        }
+                    }
                 } catch (IOException e) {
                     Logger.getGlobal().info("连接socket错误");
                 }
@@ -46,7 +57,7 @@ public class NioServer {
 
             @Override
             public void doConnectAction(SelectionKey key) {
-
+                Logger.getGlobal().info("connect");
             }
 
             @Override
@@ -72,7 +83,7 @@ public class NioServer {
 
             @Override
             public void doWriteAction(SelectionKey key) {
-
+                Logger.getGlobal().info("write");
             }
         };
         connectionSelector.setHandle(handle);
@@ -80,22 +91,28 @@ public class NioServer {
     }
 
     public void startServer() throws IOException {
-        ServerSocketChannel ssc = ServerSocketChannel.open();
+        ssc= ServerSocketChannel.open();
         //开启非阻塞
         ssc.configureBlocking(false);
         ssc.socket().bind(new InetSocketAddress(7878));
 
         ssc.register(connectionSelector.getSelector(),SelectionKey.OP_ACCEPT);
         //启动接收轮询和读取轮询线程
-        threadPool.submit(()->{
-            connectionSelector.start();
-        });
-        threadPool.submit(()->{
-            readSelector.start();
-        });
+//        threadPool.submit(()->{
+//            connectionSelector.start();
+//        });
+        connectionSelector.start();
         Logger.getGlobal().info("server start!");
     }
-
+    public void close(){
+        try{
+            connectionSelector.getSelector().close();
+            readSelector.getSelector().close();
+            ssc.close();
+        }catch (IOException e){
+            Logger.getGlobal().info("server close error!");
+        }
+    }
     public ServerSelectorLoop getReadSelector() {
         return readSelector;
     }

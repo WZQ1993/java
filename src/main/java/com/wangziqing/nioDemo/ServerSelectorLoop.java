@@ -48,13 +48,13 @@ public class ServerSelectorLoop {
             try {
                 //不断轮询操作，阻塞知道有新的事件
                 this.selector.select();
-                Set<SelectionKey> selectKeys = this.selector.selectedKeys();
+                Set selectKeys = this.selector.selectedKeys();
                 Iterator<SelectionKey> it = selectKeys.iterator();
                 while (it.hasNext()) {
                     SelectionKey key = it.next();
-                    it.remove();
                     // 处理事件. 可以用多线程来处理.
                     this.dispatch(key);
+//                    it.remove();
                 }
             } catch (IOException e) {
                 e.printStackTrace();

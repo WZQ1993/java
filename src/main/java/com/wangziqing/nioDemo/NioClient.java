@@ -15,7 +15,7 @@ import static java.nio.ByteBuffer.wrap;
  */
 public class NioClient {
     private SocketChannel socketChannel;
-    NioClient(){
+    public  NioClient(){
         try{
             socketChannel=SocketChannel.open();
             boolean isConnect=socketChannel.connect(new InetSocketAddress("localhost",7878));
@@ -36,6 +36,14 @@ public class NioClient {
             Logger.getGlobal().info("发送失败,编码错误");
         }catch (IOException e){
             Logger.getGlobal().info("发送失败,IO错误");
+        }
+    }
+
+    public void close(){
+        try{
+            socketChannel.close();
+        }catch (IOException e){
+            Logger.getGlobal().info("close error");
         }
     }
 }
