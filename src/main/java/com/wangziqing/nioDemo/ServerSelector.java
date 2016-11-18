@@ -13,17 +13,17 @@ import java.util.logging.Logger;
  * @author ziqingwang
  *         Created by ziqingwang on 2016/11/16.
  */
-public class ServerSelectorLoop {
+public class ServerSelector {
     private Selector selector;
     private SelectorHandle handle;
-    ServerSelectorLoop(){
+    ServerSelector(){
         try{
             this.selector = Selector.open();
         }catch (IOException e){
             Logger.getGlobal().info("Selector 打开错误");
         }
     }
-    ServerSelectorLoop(SelectorHandle handle) throws IOException{
+    ServerSelector(SelectorHandle handle) throws IOException{
         this.selector = Selector.open();
         this.handle=handle;
     }
