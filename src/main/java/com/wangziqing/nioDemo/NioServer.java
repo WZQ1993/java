@@ -23,9 +23,9 @@ public class NioServer {
     private ServerSelectorLoop connectionSelector;
     private ServerSelectorLoop readSelector;
     private ExecutorService threadPool = Executors.newFixedThreadPool(2);
-    private ByteBuffer temp = ByteBuffer.allocate(1024);
     private ServerSocketChannel ssc;
     private volatile Boolean ReadRunning=false;
+    private static int sum=0;
     public NioServer() {
         connectionSelector = new ServerSelectorLoop();
         readSelector = new ServerSelectorLoop();
@@ -39,17 +39,15 @@ public class NioServer {
                     SocketChannel sc = ssc.accept();
                     //将新连接注册到readSelector
                     sc.configureBlocking(false);
-                    sc.register(readSelector.getSelector(), SelectionKey.OP_READ);
-                    if(!ReadRunning){
-                        synchronized(this){
-                            if(!ReadRunning){
-                                threadPool.submit(()->{
-                                    readSelector.start();
-                                });
-                                ReadRunning=true;
-                            }
-                        }
+                    sc.register(readSelector.getSelector(), SelectionKey.OP_READ,ByteBuffer.allocate(1024));
+                    //connext单线程，无需同步
+                    if (!ReadRunning) {
+                        threadPool.submit(() -> {
+                            readSelector.start();
+                        });
+                        ReadRunning = true;
                     }
+                    Logger.getGlobal().info("连接总数："+sum++);
                 } catch (IOException e) {
                     Logger.getGlobal().info("连接socket错误");
                 }
@@ -63,19 +61,24 @@ public class NioServer {
             @Override
             public void doReadAction(SelectionKey key) {
                 try {
+                    //因为select操作并未对cancelledKey同步,因此有可能再selectedKey中出现的key是已经被取消的.
+                    // 这一点需要注意.需要校验:key.isValid() && key.isReadable()...
                     //得到注册的socketChannel
-                    SocketChannel sc = (SocketChannel) key.channel();
-                    int count = sc.read(temp);
-                    if (count == -1) {
-                        //连接断开
-                        key.cancel();
-                        sc.close();
-                        return;
+                    if(key.isValid()&&key.isReadable()){
+                        SocketChannel sc = (SocketChannel) key.channel();
+                        ByteBuffer temp=(ByteBuffer) key.attachment();
+                        int count = sc.read(temp);
+                        if (count == -1) {
+                            //连接断开
+                            key.cancel();
+                            sc.close();
+                            return;
+                        }
+                        temp.flip();
+                        String msg = Charset.forName("utf-8").decode(temp).toString();
+                        Logger.getGlobal().info("接受消息：" + msg);
+                        temp.clear();
                     }
-                    temp.flip();
-                    String msg = Charset.forName("utf-8").decode(temp).toString();
-                    Logger.getGlobal().info("接受消息：" + msg);
-                    temp.clear();
                 } catch (IOException e) {
                     Logger.getGlobal().info("读取消息错误");
                 }

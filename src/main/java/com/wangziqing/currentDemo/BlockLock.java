@@ -7,6 +7,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.locks.LockSupport;
 
 /**
+ * 该类为群里有人写的阻塞锁,修改
  * Created by ziqingwang on 2016/11/16.
  */
 public class BlockLock{

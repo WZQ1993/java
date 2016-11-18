@@ -46,15 +46,16 @@ public class ServerSelectorLoop {
     public void start() {
         while (true) {
             try {
-                //不断轮询操作，阻塞知道有新的事件
-                this.selector.select();
+                //不断轮询操作，阻塞直到有新的事件
+                //Selector本身对各种key集合的操作,都是同步的,当然为了避免死锁问题,其同步的顺序也是一致的.比如在执行select操作其他,其他线程register,将会阻塞
+                this.selector.select(10);
                 Set selectKeys = this.selector.selectedKeys();
                 Iterator<SelectionKey> it = selectKeys.iterator();
                 while (it.hasNext()) {
                     SelectionKey key = it.next();
                     // 处理事件. 可以用多线程来处理.
                     this.dispatch(key);
-//                    it.remove();
+                    it.remove();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
