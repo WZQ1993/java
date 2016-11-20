@@ -25,5 +25,7 @@ dependencies {
     compile group: 'net.sf.opencsv', name: 'opencsv', version: '2.3'
     // https://mvnrepository.com/artifact/cglib/cglib-nodep
     compile group: 'cglib', name: 'cglib-nodep', version: '3.2.4'
+    // https://mvnrepository.com/artifact/com.github.brainlag/nsq-client
+    compile group: 'com.github.brainlag', name: 'nsq-client', version: '1.0.0.RC2'
 }
 [compileJava,compileTestJava]*.options*.encoding = 'UTF-8'
