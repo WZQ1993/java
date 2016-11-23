@@ -1,4 +1,4 @@
-package com.wangziqing.bitMapDemo;
+package com.wangziqing.bigDataDemo;
 
 import java.util.BitSet;
 
