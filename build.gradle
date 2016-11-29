@@ -4,7 +4,6 @@ version '1.0-SNAPSHOT'
 apply plugin: 'java'
 
 sourceCompatibility = JavaVersion.VERSION_1_8
-sourceCompatibility = JavaVersion.VERSION_1_8
 repositories {
     maven { url "http://maven.oschina.net" }
     mavenLocal()
@@ -32,5 +31,8 @@ dependencies {
     // https://mvnrepository.com/artifact/com.googlecode.concurrentlinkedhashmap/concurrentlinkedhashmap-lru
     //谷歌LRU高性能容器，用于缓存
     compile group: 'com.googlecode.concurrentlinkedhashmap', name: 'concurrentlinkedhashmap-lru', version: '1.4.2'
+    // https://mvnrepository.com/artifact/org.elasticsearch/elasticsearch
+    //与es的版本必须一致
+    compile group: 'org.elasticsearch', name: 'elasticsearch', version: '5.0.1'
 }
 [compileJava,compileTestJava]*.options*.encoding = 'UTF-8'
