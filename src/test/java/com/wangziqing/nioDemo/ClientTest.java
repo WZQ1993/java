@@ -1,4 +1,4 @@
-package nioTest;
+package com.wangziqing.nioDemo;
 
 import com.wangziqing.nioDemo.NioClient;
 import com.wangziqing.nioDemo.NioServer;

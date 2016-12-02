@@ -34,5 +34,8 @@ dependencies {
     // https://mvnrepository.com/artifact/org.elasticsearch/elasticsearch
     //与es的版本必须一致
     compile group: 'org.elasticsearch', name: 'elasticsearch', version: '5.0.1'
+    // https://mvnrepository.com/artifact/org.mockito/mockito-all
+    //单元测试
+    compile group: 'org.mockito', name: 'mockito-all', version: '2.0.2-beta'
 }
 [compileJava,compileTestJava]*.options*.encoding = 'UTF-8'
