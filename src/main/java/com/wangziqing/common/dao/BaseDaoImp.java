@@ -1,4 +1,4 @@
-package com.wangziqing.commonDao;
+package com.wangziqing.common.dao;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;

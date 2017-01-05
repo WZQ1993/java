@@ -1,6 +1,6 @@
 package com.wangziqing.genericDemo;
 
-import com.wangziqing.commonDao.Type;
+import com.wangziqing.common.dao.Type;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
@@ -51,7 +51,7 @@ public class TypeDaoImp<T> extends BaseDao<Type> { //1
                 getClass().getTypeParameters()[0]);//T
         //获取Type
         System.out.println(
-                ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0]);//class com.wangziqing.commonDao.Type
+                ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0]);//class com.wangziqing.common.dao.Type
         //list的T
         System.out.println(
                 getClass().getField("list").getType().getTypeParameters()[0]);//E

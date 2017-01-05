@@ -1,6 +1,6 @@
 package com.wangziqing.genericDemo;
 
-import com.wangziqing.commonDao.Type;
+import com.wangziqing.common.dao.Type;
 
 import java.lang.reflect.ParameterizedType;
 

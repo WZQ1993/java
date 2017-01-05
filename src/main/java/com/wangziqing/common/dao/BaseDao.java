@@ -1,6 +1,4 @@
-package com.wangziqing.commonDao;
-
-import java.lang.reflect.ParameterizedType;
+package com.wangziqing.common.dao;
 
 /**
  * <p>

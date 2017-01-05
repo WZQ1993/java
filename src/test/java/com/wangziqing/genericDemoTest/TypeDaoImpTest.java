@@ -1,6 +1,6 @@
 package com.wangziqing.genericDemoTest;
 
-import com.wangziqing.commonDao.Type;
+import com.wangziqing.common.dao.Type;
 import com.wangziqing.genericDemo.TypeDaoImp;
 import org.junit.Test;
 

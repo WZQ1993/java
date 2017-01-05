@@ -1,4 +1,4 @@
-package com.wangziqing.commonDao;
+package com.wangziqing.common.dao;
 
 /**
  *
