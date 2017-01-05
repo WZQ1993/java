@@ -1,3 +1,5 @@
+package com.wangziqing.bigSetTest;
+
 import com.wangziqing.bigDataDemo.BigDataTest;
 import org.junit.Test;
 import org.slf4j.Logger;
